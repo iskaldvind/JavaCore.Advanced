@@ -40,6 +40,9 @@ public class Main {
             System.arraycopy(second, 0, arr, HALF, HALF);
         });
 
+        t1.start();
+        t2.start();
+
         try {
             t1.join();
             t2.join();
@@ -50,7 +53,7 @@ public class Main {
         long ended = System.currentTimeMillis();
         System.out.println("Filling array with two threads took " + (ended - started) + "ms");
     }
-    
+
     private static void fillByFormula(float[] arr) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (float)(arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
