@@ -14,27 +14,29 @@ public class Main {
 
     public static void fillArraySingleThread() {
         float[] arr = new float[SIZE];
+        Arrays.fill(arr, 1);
         long started = System.currentTimeMillis();
-        fill(arr);
+        fillByFormula(arr);
         long ended = System.currentTimeMillis();
         System.out.println("Filling array with single thread took " + (ended - started) + "ms");
     }
 
     public static void  fillArrayInHalves() {
         float[] arr = new float[SIZE];
+        Arrays.fill(arr, 1);
         float[] first = new float[HALF];
         float[] second = new float[HALF];
         long started = System.currentTimeMillis();
 
         Thread t1 = new Thread(() -> {
             System.arraycopy(arr, 0, first, 0, HALF);
-            fill(first);
+            fillByFormula(first);
             System.arraycopy(first, 0, arr, 0, HALF);
         });
 
         Thread t2 = new Thread(() -> {
             System.arraycopy(arr, HALF, second, 0, HALF);
-            fill(second);
+            fillByFormula(second);
             System.arraycopy(second, 0, arr, HALF, HALF);
         });
 
@@ -48,8 +50,8 @@ public class Main {
         long ended = System.currentTimeMillis();
         System.out.println("Filling array with two threads took " + (ended - started) + "ms");
     }
-
-    private static void fill(float[] arr) {
+    
+    private static void fillByFormula(float[] arr) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (float)(arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
         }
